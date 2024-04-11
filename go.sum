@@ -1,2 +1,4 @@
 github.com/assilbekov/grpc-app-course-protoes v0.0.0-20240410165130-7d4ab4b045b2 h1:Qrrp4aQMy5NmdNtrKaaC2e6s+LmBp4zN42Cu/t/OENk=
 github.com/assilbekov/grpc-app-course-protoes v0.0.0-20240410165130-7d4ab4b045b2/go.mod h1:GW9px88SW5iZKLoxclMr9eGC5ff+epNhF81HfNb7py0=
+github.com/assilbekov/grpc-app-course-protoes v0.0.1 h1:nIiWoAhMxp7BKExPYTV3oaXQTg2v6zWC3jHVXYaarn8=
+github.com/assilbekov/grpc-app-course-protoes v0.0.1/go.mod h1:GW9px88SW5iZKLoxclMr9eGC5ff+epNhF81HfNb7py0=
