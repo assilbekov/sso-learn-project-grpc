@@ -23,6 +23,11 @@ func main() {
 		slog.String("env", cfg.Env),
 		slog.Int("port", cfg.GRPC.Port))
 
+	log.Debug("Debug message")
+
+	log.Error("Error message")
+	log.Warn("Warning message")
+
 	// TODO: init app (app).
 
 	// TODO: run gRPC app.
