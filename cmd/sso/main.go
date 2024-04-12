@@ -1,19 +1,42 @@
 package main
 
 import (
-	"fmt"
+	"log/slog"
+	"os"
 	"sso-learn-project-grpc/internal/config"
+)
+
+const (
+	envLocal = "local"
+	envDev   = "dev"
+	envProd  = "prod"
 )
 
 func main() {
 	// TODO: init app config.
 	cfg := config.MustLoad()
 
-	fmt.Println(cfg)
-
 	// TODO: init app logger.
 
 	// TODO: init app (app).
 
 	// TODO: run gRPC app.
+}
+
+func setupLogger(env string) *slog.Logger {
+	var log *slog.Logger
+
+	switch env {
+	case envLocal:
+		log = slog.New(
+			slog.NewTextHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelDebug}))
+	case envDev:
+		log = slog.New(
+			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+	case envProd:
+		log = slog.New(
+			slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: slog.LevelInfo}))
+	}
+
+	return log
 }
