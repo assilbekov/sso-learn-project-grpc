@@ -26,6 +26,12 @@ func New(log *slog.Logger, port int) *App {
 	}
 }
 
+func (a *App) MustRun() {
+	if err := a.Run(); err != nil {
+		panic(err)
+	}
+}
+
 func (a *App) Run() error {
 	op := "grpcapp.Run"
 
