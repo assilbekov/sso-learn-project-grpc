@@ -13,10 +13,15 @@ const (
 )
 
 func main() {
-	// TODO: init app config.
+	// init app config.
 	cfg := config.MustLoad()
 
-	// TODO: init app logger.
+	// init app logger.
+	log := setupLogger(cfg.Env)
+	log.Info(
+		"starting application",
+		slog.String("env", cfg.Env),
+		slog.Int("port", cfg.GRPC.Port))
 
 	// TODO: init app (app).
 
