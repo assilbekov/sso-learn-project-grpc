@@ -3,6 +3,7 @@ package main
 import (
 	"log/slog"
 	"os"
+	"sso-learn-project-grpc/internal/app"
 	"sso-learn-project-grpc/internal/config"
 	"sso-learn-project-grpc/internal/lib/logger/handlers/slogpretty"
 )
@@ -24,12 +25,9 @@ func main() {
 		slog.String("env", cfg.Env),
 		slog.Int("port", cfg.GRPC.Port))
 
-	log.Debug("Debug message")
-
-	log.Error("Error message")
-	log.Warn("Warning message")
-
-	// TODO: init app (app).
+	// init app (app).
+	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
+	application.GRPCSrv.MustRun()
 
 	// TODO: run gRPC app.
 }
