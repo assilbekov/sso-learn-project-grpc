@@ -55,10 +55,17 @@ func (s *serverAPI) Login(
 		return nil, status.Error(codes.InvalidArgument, "app_id is required")
 	}
 
-	// TODO: implement login via auth service.
+	token, err := s.auth.Login(
+		ctx, req.GetEmail(),
+		req.GetPassword(),
+		int(req.GetAppId()),
+	)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "internal error")
+	}
 
 	return &ssov1.LoginResponse{
-		Token: req.GetEmail(),
+		Token: token,
 	}, nil
 }
 
