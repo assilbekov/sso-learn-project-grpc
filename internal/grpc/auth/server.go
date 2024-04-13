@@ -8,12 +8,31 @@ import (
 	"google.golang.org/grpc/status"
 )
 
-type serverAPI struct {
-	ssov1.UnimplementedAuthServer
+type Auth interface {
+	Login(
+		ctx context.Context,
+		email string,
+		password string,
+		appID int,
+	) (token string, err error)
+	Register(
+		ctx context.Context,
+		email string,
+		password string,
+	) (userID uint64, err error)
+	isAdmin(
+		ctx context.Context,
+		userID uint64,
+	) (bool, error)
 }
 
-func Register(gRPC *grpc.Server) {
-	ssov1.RegisterAuthServer(gRPC, &serverAPI{})
+type serverAPI struct {
+	ssov1.UnimplementedAuthServer
+	auth Auth
+}
+
+func Register(gRPC *grpc.Server, auth Auth) {
+	ssov1.RegisterAuthServer(gRPC, &serverAPI{auth: auth})
 }
 
 const (
@@ -35,6 +54,8 @@ func (s *serverAPI) Login(
 	if req.GetAppId() == emptyValue {
 		return nil, status.Error(codes.InvalidArgument, "app_id is required")
 	}
+
+	// TODO: implement login via auth service.
 
 	return &ssov1.LoginResponse{
 		Token: req.GetEmail(),
