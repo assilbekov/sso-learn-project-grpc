@@ -49,6 +49,10 @@ func New(
 	}
 }
 
+// Login checks if user with given credentials exists in the system and returns access token.
+//
+// If user exists, but password is incorrect, returns error.
+// If user doesn't exist, returns error.
 func (a *Auth) Login(
 	ctx context.Context,
 	email string,
@@ -58,7 +62,9 @@ func (a *Auth) Login(
 	panic("not implemented")
 }
 
-func (a *Auth) Register(
+// RegisterNewUser registers new user in the system and returns user ID.
+// If user with given username already exists, returns error.
+func (a *Auth) RegisterNewUser(
 	ctx context.Context,
 	email string,
 	password string,
@@ -66,6 +72,7 @@ func (a *Auth) Register(
 	panic("not implemented")
 }
 
+// IsAdmin checks if user is admin.
 func (a *Auth) isAdmin(
 	ctx context.Context,
 	userID int64,
