@@ -48,3 +48,27 @@ func New(
 		tokenTTL:    tokenTTL,
 	}
 }
+
+func (a *Auth) Login(
+	ctx context.Context,
+	email string,
+	password string,
+	appID int,
+) (string, error) {
+	panic("not implemented")
+}
+
+func (a *Auth) Register(
+	ctx context.Context,
+	email string,
+	password string,
+) (int64, error) {
+	panic("not implemented")
+}
+
+func (a *Auth) isAdmin(
+	ctx context.Context,
+	userID int64,
+) (bool, error) {
+	panic("not implemented")
+}
