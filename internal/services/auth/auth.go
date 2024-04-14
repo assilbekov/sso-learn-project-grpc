@@ -32,6 +32,7 @@ type AppProvider interface {
 	App(ctx context.Context, appID int64) (models.App, error)
 }
 
+// New returns a new Auth service.
 func New(
 	log *slog.Logger,
 	userSaver UserSaver,
