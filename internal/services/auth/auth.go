@@ -23,6 +23,7 @@ type Auth struct {
 
 var (
 	ErrInvalidCredentials = errors.New("invalid credentials")
+	ErrInvalidAppID       = errors.New("invalid app ID")
 )
 
 type UserSaver interface {
@@ -163,9 +164,9 @@ func (a *Auth) isAdmin(
 	isAdmin, err := a.usrProvider.isAdmin(ctx, userID)
 	if err != nil {
 		if errors.Is(err, storage.ErrAppNotFound) {
-			log.Error("app not found", sl.Err(err))
+			log.Warn("app not found", sl.Err(err))
 
-			return false, fmt.Errorf("%s: %w", op, err)
+			return false, fmt.Errorf("%s: %w", op, ErrInvalidAppID)
 		}
 
 		log.Error("failed to check if user is admin", sl.Err(err))
