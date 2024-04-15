@@ -162,6 +162,12 @@ func (a *Auth) isAdmin(
 
 	isAdmin, err := a.usrProvider.isAdmin(ctx, userID)
 	if err != nil {
+		if errors.Is(err, storage.ErrAppNotFound) {
+			log.Error("app not found", sl.Err(err))
+
+			return false, fmt.Errorf("%s: %w", op, err)
+		}
+
 		log.Error("failed to check if user is admin", sl.Err(err))
 
 		return false, fmt.Errorf("%s: %w", op, err)
