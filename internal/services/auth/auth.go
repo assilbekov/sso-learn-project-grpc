@@ -2,8 +2,11 @@ package auth
 
 import (
 	"context"
+	"fmt"
+	"golang.org/x/crypto/bcrypt"
 	"log/slog"
 	"sso-learn-project-grpc/internal/domain/models"
+	"sso-learn-project-grpc/internal/lib/logger/sl"
 	"time"
 )
 
@@ -67,9 +70,32 @@ func (a *Auth) Login(
 func (a *Auth) RegisterNewUser(
 	ctx context.Context,
 	email string,
-	password string,
+	pass string,
 ) (int64, error) {
-	panic("not implemented")
+	const op = "op.auth.RegisterNewUser"
+
+	log := a.log.With(
+		slog.String("op", op),
+		slog.String("email", email))
+
+	log.Info("registering new user")
+	passHash, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	if err != nil {
+		log.Error("failed to hash password", sl.Err(err))
+
+		return 0, fmt.Errorf("%s: %w", op, err)
+	}
+
+	id, err := a.usrSaver.SaveUser(ctx, email, passHash)
+	if err != nil {
+		log.Error("failed to save user", sl.Err(err))
+
+		return 0, fmt.Errorf("%s: %w", op, err)
+	}
+
+	log.Info("user registered", slog.Int64("id", id))
+
+	return id, nil
 }
 
 // IsAdmin checks if user is admin.
