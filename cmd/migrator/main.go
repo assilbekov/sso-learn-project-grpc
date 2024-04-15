@@ -1,10 +1,14 @@
-package migrator
+package main
 
 import (
 	"errors"
 	"flag"
 	"fmt"
 	"github.com/golang-migrate/migrate/v4"
+	// Importing the sqlite 3 driver.
+	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
+	// Importing the file source driver.
+	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
 
 func main() {
