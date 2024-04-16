@@ -102,7 +102,7 @@ func (s *Storage) App(ctx context.Context, id int) (models.App, error) {
 	return app, nil
 }
 
-func (s *Storage) isAdmin(ctx context.Context, email string) (bool, error) {
+func (s *Storage) IsAdmin(ctx context.Context, email string) (bool, error) {
 	const op = "storage.sqlite.isAdmit"
 
 	stmt, err := s.db.Prepare("SELECT id FROM users WHERE email = ?")
