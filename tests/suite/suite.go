@@ -11,3 +11,12 @@ type Suite struct {
 	Cfg        *config.Config
 	AuthClient ssov1.AuthClient
 }
+
+func New(t *testing.T) *Suite {
+	cfg := config.MustLoad()
+
+	return &Suite{
+		T:   t,
+		Cfg: cfg,
+	}
+}
